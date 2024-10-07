@@ -71,4 +71,59 @@ console.log(user.status.includes("generous"));
 
 // Також можна використовувати властивості й методи масиву, наприклад отримати значення його довжини з властивості length: user.hobbies.length;
 
+console.log(user["age"]);
 
+
+const family = "whoHeLikes";
+console.log(user.family);
+console.log(user[family]);
+
+
+// Після того як об'єкт створений, значення його властивостей можна змінити. Для цього необхідно звернутися до них за ключем, наприклад, «через крапку», і присвоїти нове значення.
+
+user.age = 40;
+user.location.country = "Italy";
+user.status.push("married");
+
+console.log(user.age);
+console.log(user.location.country);
+console.log(user.status);
+
+
+// Операція додавання нової властивості після створення об'єкта нічим не відрізняється від зміни значення вже існуючої властивості.Якщо під час запису значення за ключем така властивість відсутня в об'єкті, вона буде створена.
+
+book.price = {
+  hardcover: 39,
+  softcover: 29
+}
+book.pages = 526;
+book.lang = "eng";
+book.trans = ["ua", "it"];
+
+
+// Синтаксис коротких властивостей (shorthand properties) вирішує цю проблему, дозволяючи використовувати ім'я змінної як ім'я властивості, а її значення як значення властивості.
+
+const name = "Diana";
+const age = 32;
+
+const wife = {
+  name,
+  age,
+  status: `Married with ${user.name}`
+}
+
+console.log(wife);
+
+// Замість name: name, використали name. А замість age: age, — age.
+// Тобто під час оголошення об'єкта достатньо вказати тільки ім'я властивості, а значення буде взято зі змінної з аналогічним ім'ям.
+
+
+// Синтаксис обчислювальних властивостей (computed properties) допомагає уникнути зайвого коду і в деяких випадках спростити його.Значенням обчислювальної властивості може бути будь-який валідний вираз.
+
+const kids = "kidGender";
+const Family = {
+  husband: "Richard",
+  wife: "Diana",
+  [kids]: "girl",
+  kidName: "Clair"
+}
