@@ -369,3 +369,251 @@ for (let product of products) {
 }
   return `Product ${productName} not found!`
 }
+
+
+// Об'єкти можуть зберігати не тільки дані, але й функції для роботи з цими даними. Якщо значення властивості — це функція, така властивість називається методом об'єкта.
+
+const obj = {
+  method(value) {
+    console.log(`I am a method with ${value}`);
+    
+  }
+}
+
+obj.method(5);
+obj.method(10);
+
+
+// Метод — це звичайна функція, оголошена як властивість об'єкта (див. приклад вище), а не як окрема змінна (див. перший приклад у розділі). Для звернення до методу об'єкта використовується стандартний синтаксис із крапкою.
+// Об'єкти, які пов'язують дані та методи для роботи з цими даними, можна назвати «моделями».
+
+// Створимо об’єкт bookShelf для колекції книг books і методів взаємодії з колекцією getBooks і addBook.
+
+const bookShelf = {
+  books: ["gygxg", "w8eyd9"],
+  getBooks() {
+    return "Get all books";
+  },
+  addBook(bookName) {
+    return `You added a book named ${bookName}`;
+  }
+}
+
+bookShelf.getBooks(); //
+bookShelf.addBook("New book 1"); //
+bookShelf.addBook("New book 2"); //
+
+
+// Методи використовуються для роботи з властивостями об'єкта та їх змінних. Для доступу до об'єкта в методі використовується не ім'я змінної цього об’єкта, наприклад bookShelf, а ключове слово this.
+
+// Ключове слово this — це контекст виконання функції.
+
+const Bookshelf = {
+  books: ["owuhw", "ijoidwoie"],
+  getBooks() {
+    console.log(this);
+    
+  }
+}
+
+Bookshelf.getBooks();
+
+// Значенням this буде посилання на об'єкт перед «крапкою», тобто об'єкт, який викликав цей метод, у нашому випадку — це посилання на об'єкт Bookshelf
+
+// Для доступу до властивостей об'єкта в методах звертаємось до нього через this і далі, стандартно, «через крапку» до властивостей.
+
+const BookShelf = {
+  books: ["owuhw", "ijoidwoie"],
+  getBooks() {
+    console.log(this.books);
+    
+  }
+}
+
+Bookshelf.getBooks();
+
+
+
+const atTheOldToad = {
+  potions: ["Speed potion", "Stone skin"],
+  getPotions() {
+    return this.potions;
+  },
+};
+
+
+// У властивості books об'єкта bookShelf зберігається масив. Отже, ми можемо змінювати масив за посиланням, звертаючись до властивості bookShelf.books, тому що це посилання на масив.
+
+const shelf = {
+  books: ["kingdom"]
+}
+
+shelf.books.push("mist", "isjixw");
+console.log(shelf);
+console.log(shelf.books);
+
+
+// У прикладі нижче в ключовому слові this зберігається посилання на об'єкт, що викликав відповідний метод. Під час звернення до this.books усередині методу, ми посилаємось на масив, що зберігається у властивості books. Це означає, що його можна змінювати за посиланням, наприклад, використавши метод масиву push() для додавання нового елемента.
+
+const Shelf = {
+  books: ["odhcud"],
+  getBooks() {
+    console.log(this.books);
+    
+  },
+  addBook(bookName) {
+    this.books.push(bookName)
+  }
+}
+
+Shelf.getBooks();
+Shelf.addBook("pidjuhde");
+
+
+
+const bookshelf = {
+  books: [
+    { name: 'ishocos', rating: 7 },
+    { name: 'uhfowo', rating: 4 },
+  ],
+
+  getAverageRating() {
+    let total = 0;
+    for (const book of this.books) {
+      total += book.rating;
+    }
+    console.log(total);
+    
+  }
+}
+
+bookshelf.getAverageRating();
+
+
+// Ціла група завдань зводиться до зміни значення властивості певного об'єкта в масиві. Наприклад, зміна рейтингу книги. Пошук необхідного об'єкта в масиві виконується за унікальним значенням властивості, наприклад, за ім'ям книги.
+
+const travels = {
+  countries: [
+    { name: "Italy", rating: 10, isVisited: true },
+    { name: "Spain", rating: 8, isVisited: false },
+    {name: "Switzerland", rating: 9, isVisited: false}
+  ],
+
+  changeStatus(countryName, newRating, newVisit = this.countries.isVisited) {
+    for (const country of this.countries) {
+      if (this.countries === countryName) {
+        country.rating = newRating;
+        country.isVisited = newVisit;
+      }
+    }
+    console.log(this.countries);
+    
+  }
+}
+
+travels.changeStatus("Switzerland", 12, true);
+travels.changeStatus("Spain", 7);
+travels.changeStatus("New Zealand", 8, true);
+
+
+// Починаючи зі стандарту ES6, з'явилася концепція залишкових параметрів (...rest). Це спеціальний синтаксис, який дозволяє зібрати групу незалежних елементів у масив.
+
+function multiply(...args) {
+  console.log(args);
+  
+}
+
+multiply(1, 2);
+multiply(1, 2, 3);
+multiply(1, 2, 6, 8, 7);
+multiply(1, 2, 6, "doudh", true);
+
+// Вільні параметри можуть бути позначені через три крапки .... Буквально це означає: "збери параметри, що залишилися, і поклади їх у масив". Ім'я параметра може бути довільним. Найчастіше його називають args або rest.
+
+function add(...args) {
+  let total = 0;
+  for (let arg of args) {
+    total += arg;
+  }
+  return total;
+}
+
+
+// Операція (...rest) також дозволяє зібрати в масив тільки ту частину аргументів, яка необхідна. Для цього потрібно оголосити параметри до «збирання». Можна покласти перші кілька параметрів у змінні, а решту — зібрати в масив.
+
+function multiply(first, second, ...rest) {
+  console.log(first, second, rest);
+  
+}
+multiply(1, 2);
+multiply(1, 3, 5);
+multiply(1, 4, 5, 63, 5);
+
+// Операція rest збирає решту всіх аргументів, а тому повинна завжди бути останньою в підписі функції, інакше виникне помилка SyntaxError: Rest parameter must be last formal parameter.
+
+function addOverNum(value, ...args) {
+  let total = 0;
+  for (let arg of args) {
+    if (arg > value) {
+      total += arg;
+    }
+  }
+  return total;
+}
+
+
+
+// Інколи потрібно зробити протилежне — передати масив поелементно у функцію, яка викликається. Наприклад, є вбудована функція 
+// Math.max(), яка шукає та повертає найбільший з аргументів(чисел), тобто очікує не масив значень, а довільну кількість аргументів.
+
+Math.max(14, -4, 25, 8, 11);
+
+const temps = [14, -4, 25, 8, 11];
+console.log(Math.max(temps));
+
+// Тут доцільно використати оператор розпилення ...spread. Він схожий на залишкові параметри — теж використовує ..., але робить абсолютно протилежне. Коли функціонал ...spread використовується при виклику функції, він перетворює масив на список аргументів.
+
+console.log(Math.max(...temps));
+
+function getExtremeScores(scores) {
+  return {
+    best: Math.max(...scores),
+    worst: Math.min(...scores)
+  }
+}
+
+
+// Операція ...spread дозволяє створити копію масиву або «склеїти» довільну кількість масивів в один новий. Досі для цього використовувалися методи slice() і concat(), але операція розпилення дозволяє зробити те саме в коротшій формі.
+
+const Temps = [14, -4, 25, 8, 11];
+// Це точна, але незалежна копія масиву temps
+const copy = [...Temps];
+console.log(copy);
+
+
+
+const lastWeek = [11, 24, 16];
+const current = [23, 17, 22];
+const all = [...lastWeek, ...current];
+console.log(all);
+
+
+
+const firstGroupScores = [64, 42, 93];
+const secondGroupScores = [89, 14, 51, 26];
+const thirdGroupScores = [29, 47, 18, 97, 81];
+
+const allScores = [...firstGroupScores, ...secondGroupScores, ...thirdGroupScores];
+const bestScore = Math.max(...allScores);
+const worstScore = Math.min(...allScores);
+
+
+// Під час розпилення можна додавати властивості в довільне місце. Головне пам'ятати про унікальність імені властивості і про те, що її значення може бути перезаписане.
+
+const first = { A: 5, B: 10 };
+const second = { C: 20, D: 15 };
+const third = { ...first, ...second };
+const fourth = { ...second, ...first };
+console.log(third);
+console.log(fourth);
+
