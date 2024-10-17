@@ -153,3 +153,267 @@ const logMessage = (num, ind) => {
 }
 
 console.log(numbers.forEach(logMessage));
+
+
+
+// Функція з побічними ефектами — це функція, яка в процесі виконання може:
+// змінювати або використовувати глобальні змінні
+// змінювати значення аргументів посилального типу
+// виконувати операції введення-виведення тощо
+
+const dirtyMultiply = (array, value) => {
+    for (let i = 0; i < array.length; i++) {
+        array[i] = array[i] * value;
+    }
+}
+
+const number = [1, 2, 3, 4, 5];
+dirtyMultiply(number, 2);
+console.log(number);
+
+
+// Чиста функція (pure function) — це функція, результат якої залежить тільки від значень переданих аргументів. За умови однакових аргументів вона завжди повертає один і той самий результат і не має побічних ефектів, тобто не змінює значення аргументів.
+
+const pureMultiply = (array, value) => {
+  const newArray = [];
+
+  array.forEach(element => {
+    newArray.push(element * value);
+  });
+
+  return newArray;
+};
+
+const numbers = [1, 2, 3, 4, 5];
+const doubledNumbers = pureMultiply(numbers, 2);
+
+// Мутація вихідних даних не відбулася
+console.log(numbers); // [1, 2, 3, 4, 5]
+// Функція повернула новий масив зі зміненими даними
+console.log(doubledNumbers); // [2, 4, 6, 8, 10]
+
+
+
+// Усі перебираючі методи масивів мають схожий синтаксис. На вихідному масиві array викликається перебираючий метод method , у який аргументом передається колбек-функція callback .
+
+array.method(callback(currentValue, index, array))
+
+// У більшості методів колбек-функції, які є їхнім аргументом, отримують три наступні параметри:
+// першим параметром буде значення поточного елемента масиву currentValue
+// другим параметром буде індекс поточного елемента масиву index
+// третім параметром буде посилання на сам вихідний масив array
+
+array.method((item, idx, arr) => {
+  // логіка, яка буде виконуватися на кожній ітерації
+});
+
+// Усі параметри, окрім значення поточного елемента масиву item, необов'язкові. Назви параметрів можуть бути будь-які, головне, щоб вони були зрозумілі тобі та іншим розробникам.
+
+array.method(item => {
+  // логіка, яка буде виконуватися на кожній ітерації
+});
+
+
+// Більшість перебираючих методів масиву — це чисті функції. Вони створюють новий масив, заповнюють його, застосовуючи до значення кожного елемента зазначену колбек-функцію, після чого повертають цей новий масив.
+
+// Метод map(callback) використовується для трансформації масиву. Він викликає колбек-функцію для кожного елемента вихідного масиву, а результат її роботи записує в новий масив, який і буде результатом виконання методу.
+
+array.map((element, index, array) => {
+    //тіло
+})
+
+
+// Поелементно перебирає оригінальний масив
+// Не змінює оригінальний масив
+// Результат роботи колбек-функції записується в новий масив
+// Повертає новий масив такої ж довжини, як і в масиву, до якого він був застосований
+
+
+// Його можна використовувати для того, щоб змінити кожен елемент масиву. Оригінальний масив використовується як еталон, на основі якого можна зробити іншу колекцію.
+
+
+const cities = ['Portofino', 'Mayorka', 'Gstaad', 'Barselona'];
+
+const citiesInUpperCase = cities.map(city => city.toUpperCase());
+console.log(citiesInUpperCase);
+
+const citiesToLower = cities.map(city => city.toLowerCase())
+console.log(citiesToLower);
+
+console.log(cities);
+
+
+// Наприклад, отримати масив значень властивості з усіх об'єктів. У нас є масив студентів, а потрібно отримати окремий масив їхніх імен.
+
+const students = [
+  { name: "Mango", score: 83 },
+  { name: "Poly", score: 59 },
+  { name: "Ajax", score: 37 },
+  { name: "Kiwi", score: 94 },
+  { name: "Houston", score: 64 },
+];
+
+const names = students.map(student => student.name);
+console.log(names);
+
+
+// Метод flatMap(callback) аналогічний методу map(), але застосовується у випадках, коли результат — це багатовимірний масив, який необхідно «розгладити».
+
+
+
+array.flatMap((element, index, array) => {
+  // Тіло колбек-функції
+});
+
+
+const students = [
+  { name: "Mango", courses: ["mathematics", "physics"] },
+  { name: "Poly", courses: ["science", "mathematics"] },
+  { name: "Kiwi", courses: ["physics", "biology"] },
+];
+
+const mappedCourses = students.map(student => student.courses);
+console.log(mappedCourses);
+
+const flattenedCourses = students.flatMap(student => student.courses);
+console.log(flattenedCourses);
+
+// Метод flatMap викликає колбек-функцію для кожного елемента вихідного масиву, а результат її роботи записує в новий масив. Відмінність від map() полягає в тому, що новий масив «розгладжується» на глибину, що дорівнює одиниці (одна вкладеність). Цей розгладжений (плоский) масив і є результатом роботи flatMap().
+
+
+// Метод filter(callback) використовується для єдиної операції — фільтрації масиву. Під фільтрацією масиву мається на увазі відбір усіх елементів з колекції за певним критерієм.
+
+array.filter((element, index, array) => {
+  // Тіло колбек-функції
+});
+
+// Не змінює оригінальний масив.
+// Поелементно перебирає оригінальний масив.
+// Повертає новий масив.
+// Додає в масив, що повертається, елементи, які задовольняють умову колбек-функції.
+// Якщо колбек повернув true, елемент додається в масив, що повертається.
+// Якщо колбек повернув false, елемент не додається в масив, що повертається.
+// Якщо жоден елемент не задовольнив умову, повертає порожній масив.
+
+
+const values = [15, -2, 82, 992, 1272, 0, -29, 28.9];
+
+const positive = values.filter(value => value > 0);
+console.log(positive);
+
+const negative = values.filter(value => value < 0);
+console.log(negative);
+
+const huge = values.filter(value => value > 1300);
+console.log(huge);
+
+// Отже, метод filter викликає колбек-функцію для кожного елемента вихідного масиву. Якщо результат її виконання true, поточний елемент додається в новий масив.
+
+
+// Під час роботи з масивом об'єктів виконується фільтрація за значенням певної властивості. У підсумку утворюється новий масив відфільтрованих об'єктів.
+
+const LOW_SCORE = 50;
+const HIGH_SCORE = 80;
+const students = [
+  { name: "Mango", score: 83 },
+  { name: "Poly", score: 59 },
+  { name: "Ajax", score: 37 },
+  { name: "Kiwi", score: 94 },
+  { name: "Houston", score: 64 },
+];
+
+const best = students.filter(student => student.score >= HIGH_SCORE);
+console.log(best);
+
+const worst = students.filter(student => student.score < LOW_SCORE);
+console.log(worst);
+
+const average = students.filter(student => student.score >= LOW_SCORE && student.score < HIGH_SCORE);
+console.log(average);
+
+console.log(students);
+
+
+
+// Метод find(callback) дозволяє знайти і повернути перший відповідний елемент, що задовольняє умову, після чого перебирання масиву припиняється. Тобто він, на відміну від методу filter(callback), шукає до першого збігу.
+
+array.find((element, index, array) => {
+  // Тіло колбек-функції
+});
+
+// Не змінює оригінальний масив
+// Поелементно перебирає оригінальний масив
+// Повертає перший елемент, що задовольняє умову, тобто коли колбек повертає true
+// Якщо жоден елемент не задовольнив умову, тобто для всіх елементів колбек повернув false, метод повертає undefined
+
+// Метод find() використовується для одного завдання — пошуку першого елемента, який задовольняє умову. Наприклад, пошук користувача за поштою, автомобіля — за серійним номером, книги — за назвою тощо.
+
+
+const colorPickerOptions = [
+  { label: "red", color: "#F44336" },
+  { label: "green", color: "#4CAF50" },
+  { label: "blue", color: "#2196F3" },
+  { label: "pink", color: "#E91E63" },
+  { label: "indigo", color: "#3F51B5" },
+];
+
+
+console.log(colorPickerOptions.find(option => option.label === 'pink')); // видає третій об'єкт
+console.log(colorPickerOptions.find(option => option.color === 'red')); // видає undefined
+
+
+
+// Метод every(callback) перевіряє, чи задовольняють усі елементи умову колбек-функції.
+
+array.every((element, index, array) => {
+  // Тіло колбек-функції
+});
+
+// Не змінює оригінальний масив
+// Поелементно перебирає оригінальний масив
+// Повертає true, якщо всі елементи масиву задовольняють умову
+// Повертає false, якщо хоча б один елемент масиву не задовольняє умову
+// Перебирання масиву припиняється, якщо колбек повертає false
+
+
+console.log([1, 2, 3].every(num => num >= 0)); //true
+console.log([1, -2, 3].every(num => num >= 0)); //false
+
+
+// Під час роботи з масивом об'єктів перевіряється значення якоїсь їхньої властивості. Наприклад, перебираючи масив об'єктів товарів, ми можемо перевірити, чи всі товари є в наявності.
+
+const countries = [
+    {name: 'Italy', timesVisited: 1},
+    {name: 'Ukraine', timesVisited: 100},
+    {name: 'Spain', timesVisited: 0},
+    {name: 'Hungary', timesVisited: 2},
+    {name: 'Slovenia', timesVisited: 3},
+]
+
+const allCountriesAreVisited = countries.every(country => country.timesVisited > 0);
+console.log(allCountriesAreVisited);
+
+
+// Метод some(callback) перевіряє, чи задовольняє хоча б один елемент умову колбек-функції.
+
+array.some((element, index, array) => {
+  // Тіло колбек-функції
+});
+
+// Не змінює оригінальний масив
+// Поелементно перебирає оригінальний масив
+// Повертає true, якщо хоча б один елемент масиву задовольняє умову
+// Повертає false, якщо жоден елемент масиву не задовольняє умову
+// Перебирання масиву припиняється, якщо колбек повертає true
+
+
+const countries = [
+    {name: 'Italy', timesVisited: 1},
+    {name: 'Ukraine', timesVisited: 100},
+    {name: 'Spain', timesVisited: 0},
+    {name: 'Hungary', timesVisited: 2},
+    {name: 'Slovenia', timesVisited: 3},
+]
+
+const anyCountyIsNotVisited = countries.some(country => country.timesVisited === 0);
+console.log(anyCountyIsNotVisited);
