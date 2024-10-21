@@ -417,3 +417,197 @@ const countries = [
 
 const anyCountyIsNotVisited = countries.some(country => country.timesVisited === 0);
 console.log(anyCountyIsNotVisited);
+
+
+
+// Метод reduce(callback, initialValue) використовується для послідовної обробки кожного елемента масиву із збереженням проміжного результату.
+
+array.reduce((previousValue, element, index, array) => {
+  // Тіло колбек-функції
+}, initialValue);
+
+// Не змінює оригінальний масив
+// Поелементно перебирає оригінальний масив
+// Повертає все, що завгодно (об’єкт, масив, рядок, число тощо)
+// Може замінити функціонал будь-якого іншого перебираючого методу масиву та навіть їх комбінацію
+
+
+// Метод reduce() очікує 2 параметри:
+
+// 1-й параметр (обов’язковий) — колбек-функція, яка "опрацьовує" кожен елемент масиву;
+
+// 2-й параметр (не обов’язковий) — initialValue початкове значення акумулятора.
+
+// Колбек-функція з параметра редьюса очікує в свою чергу чотири параметри. Ці параметри, так само як і в колбеках інших перебираючих методів масиву, можна не оголошувати, якщо вони вам не потрібні, але не можна порушувати їх послідовність:
+
+// 1-й параметр (previousValue) — це акумулятор, тобто проміжний результат. Значення, яке поверне колбек-функція на поточній ітерації, буде значенням цього параметра на наступній ітерації;
+
+// 2-й параметр — поточний елемент масиву;
+
+// 3-й параметр — індекс поточної ітерації;
+
+// 4-й параметр — посилання на вихідний масив.
+
+const total = [2, 4, 8].reduce((acc, num) => {
+  return acc + num;
+}, 0)
+
+console.log(total); //14
+
+
+// Тобто метод reduce() використовується, коли необхідно взяти «багато» і привести до «одного». У повсякденних завданнях його застосування зводиться до роботи з числами.
+
+
+// Під час роботи з масивом об'єктів виконується редукування за значенням певної властивості. Наприклад, у нас є масив студентів з балами за тест. Необхідно отримати середній бал.
+
+const students = [
+  { name: "Mango", score: 83 },
+  { name: "Poly", score: 59 },
+  { name: "Ajax", score: 37 },
+  { name: "Kiwi", score: 94 },
+  { name: "Houston", score: 64 },
+];
+
+const totalScores = students.reduce((acc, student) => {
+  return acc + student.score;
+}, 0)
+
+const average = totalScores / students.length;
+
+console.log(average);
+
+
+// Метод toSorted() сортує елементи масиву.
+array.toSorted();
+
+// Сортує вихідний масив
+// Повертає новий масив
+// За замовчуванням сортує за зростанням
+
+const scores = [61, 19, 74, 35, 92, 56];
+const ascendingScores = scores.copyWithin(3, 1, 4);
+console.log(ascendingScores);
+
+// Оскільки за замовчуванням перед сортуванням метод toSorted() приводить усі елементи масиву до рядків, то фактично елементи сортуються як рядки, тобто на основі їхніх значень у таблиці Unicode. Стандартне сортування чисел виглядає незвично, коли ми думаємо про числа, але зрозуміло, якщо знати, що числа були перетворені на рядки.
+
+const scores = [27, 2, 41, 4, 7, 3, 75];
+console.log(scores.toSorted());
+
+
+// Масив рядків сортується за алфавітом.
+
+const students = ["Jacob", "Artemis", "Solomon", "Adrian", "Kai", "Ganymede"];
+console.log(students.toSorted());
+
+// Водночас порядковий номер великих літер менший, ніж у малих.
+
+const letters = ["b", "B", "a", "A", "c", "C"];
+console.log(letters.toSorted());
+
+
+// Для зазначення свого порядку сортування методу toSorted(compareFunction) потрібно передати колбек-функцію з двома параметрами.
+// Це функція порівняння (compare function), порядок сортування залежить від її результату. Метод toSorted() буде викликати її для двох довільних елементів.
+
+array.toSorted((a, b) => {
+  // Callback function body
+});
+
+// a — перший елемент для порівняння.
+// b — другий елемент для порівняння.
+
+
+// Якщо виклик compareFunction(a, b) повертає будь-яке негативне значення, тобто a менше b, сортування поставить a перед b.
+
+const scores = [61, 19, 74, 35, 92, 56];
+const ascendingScores = scores.toSorted((a, b) => a - b)
+console.log(ascendingScores);
+
+
+
+// Якщо виклик compareFunction(a, b) повертає будь-яке позитивне значення, тобто b більше a, сортування поставить b перед a.
+const scores = [61, 19, 74, 35, 92, 56];
+console.log(scores.toSorted((a, b) => b - a));
+
+
+// Якщо виклик compareFunction(a, b) поверне 0, сортування залишить a і b незмінними по відношенню один до одного, але відсортує їх по відношенню до всіх інших елементів.
+
+// Зверни увагу, що при сортуванні масиву чисел і передачі в метод toSorted() колбек-функції, числа вже не будуть приводитися до рядків, тобто їх сортування буде очікуваним і звичним.
+
+
+// Для сортування рядків в алфавітному порядку, за зростанням або спаданням, використовується метод рядків localeCompare().
+
+firstString.localeCompare(secondString)
+
+// Він викликається на рядку, який потрібно порівняти (firstString) з тим, що був переданий йому як аргумент (secondString).
+
+"a".localeCompare("b"); // -1
+"b".localeCompare("a"); // 1
+"a".localeCompare("a"); // 0
+"b".localeCompare("b"); // 0
+
+// Повертає негативне значення, якщо firstString повинен бути перед secondString
+// Повертає позитивне значення, якщо firstString повинен бути після secondString
+// Якщо рядки однакові, повертається нуль і їх послідовність по відношенню один до одного не змінюється
+
+
+// Метод localeCompare() зручно використовувати для сортування рядків, оскільки метод toSorted() очікує такі самі значення від колбек-функції.
+
+const students = ["Jacob", "Artemis", "Solomon", "Adrian", "Kai", "Ganymede"];
+
+const inAlphabetOrder = students.toSorted((a, b) => a.localeCompare(b));
+const inReversedOrder = students.toSorted((a, b) => b.localeCompare(a));
+console.log(inAlphabetOrder);
+console.log(inReversedOrder);
+
+
+// Під час роботи з масивом об'єктів сортування виконується за числовим або рядковим значенням певної властивості. Наприклад, у нас є група студентів з балами за тест. Необхідно відсортувати масив об'єктів за трьома різними сценаріями:
+
+// за зростанням кількості балів
+// за спаданням кількості балів
+// за ім'ям студента в алфавітному порядку
+
+
+const students = [
+  { name: "Mango", score: 83 },
+  { name: "Poly", score: 59 },
+  { name: "Ajax", score: 37 },
+  { name: "Kiwi", score: 94 },
+];
+
+const inAscendingScoreOrder = students.toSorted((first, second) => first.score - second.score);
+const inDescendingScoreOrder = students.toSorted((firstStudent, secondStudent) => secondStudent.score - firstStudent.score);
+const inAlphabetOrder = students.toSorted((first, second) => first.name.localeCompare(second.name));
+
+console.log(inAscendingScoreOrder);
+console.log(inDescendingScoreOrder);
+console.log(inAlphabetOrder);
+
+
+// Проблема в тому, що в нас з'являються проміжні змінні після кожної операції, крім фінальної. Змінна sortedByAscendingScore — зайва. Вона необхідна тільки для зберігання проміжного результату.
+// Позбутися таких «мертвих» змінних можна за допомогою групування викликів методів у ланцюжки. Кожний наступний метод буде виконуватися на основі результату роботи попереднього.
+
+const students = [
+  { name: "Mango", score: 83, courses: ["mathematics", "physics"] },
+  { name: "Poly", score: 59, courses: ["science", "mathematics"] },
+  { name: "Ajax", score: 37, courses: ["physics", "biology"] },
+  { name: "Kiwi", score: 94, courses: ["literature", "science"] },
+];
+
+const names = students
+  .toSorted((a, b) => a.score - b.score)
+  .map(student => student.name);
+
+  console.log(names);
+  
+
+const uniqueSortedClasses = students
+  .flatMap(student => student.courses)
+  .filter((subject, i, arr) => arr.indexOf(subject) === i)
+  .toSorted((a, b) => a - b);
+  console.log(uniqueSortedClasses);
+  
+
+  // Ланцюжок методів може бути довільної довжини, але зазвичай не більше 2-3 операцій.
+// По-перше, перебираючі методи використовуються для порівняно простих операцій над колекцією. По-друге, виклик кожного наступного методу — це додаткове перебирання масиву, що за великої кількості може позначитися на продуктивності.
+
+
