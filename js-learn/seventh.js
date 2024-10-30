@@ -92,3 +92,150 @@ console.log(nested.textContent);
 // Властивість textContent можна як читати, так і змінювати. Неважливо, що буде передано в textContent, дані завжди будуть записані як текст.
 
 el.textContent = "I am Mango!"
+
+
+// Для того щоб із JavaScript коду прочитати, додати, видалити або перевірити наявність CSS-класу в елемента, у властивості classList зберігається об'єкт із методами для роботи з CSS-класами елемента.
+
+// Властивість classList — це спеціальний тип об’єкта, який подібний до масиву. Зверни увагу, що він схожий, але не є нативним JavaScript-масивом, який ми вивчали раніше. Він зберігає в собі весь перелік класів DOM-елемента, властивість length і властивість value.
+
+// властивість value містить точне значення атрибута class
+// властивість length — кількість класів в елемента
+
+// Але самі по собі value та length майже не використовуються, тому що для операцій з класами (додавання, видалення тощо) є спеціальні методи.
+
+        <a class="link is-active" href = "https://goit.global" > GoIT </a>
+
+const link = document.querySelector(".link");
+console.log(link.classList); // ["link", "is-active", length: 2, value: "link is-active"]
+
+// Метод classList.contains(className)
+
+// Метод очікує аргументом рядок з іменем класу та повертає true або false, залежно від наявності класу className в елемента.
+
+// Зверни увагу, що className передаємо як рядок без крапки (без селектора класу).
+
+const hasActiveClass = link.classList.contains("is-active"); // true
+const hasActiveClass = link.classList.contains("title"); // false
+
+
+
+// Метод classList.add(className)
+
+// Метод очікує аргументом рядок з іменем класу та додає клас className до списку класів елемента.
+
+link.classList.add("special");
+console.log(link.classList); 
+// ["link", "is-active", "special", length: 3, value: "link is-active special"]
+
+// !!! Можна додавати більше одного класу, вказавши кілька аргументів через кому.
+
+
+// Метод classList.remove(className)
+
+// Метод очікує аргументом рядок з іменем класу та видаляє клас className зі списку класів елемента.
+
+link.classList.remove("is-active");
+console.log(link.classList); 
+// ["link", "special", length: 2, value: "link special"]
+
+// Якщо спробувати видалити клас, якого не існує на елементі, то це не викличе помилку. Просто нічого не видалиться.
+
+
+// Метод classList.toggle(className)
+
+// Метод працює як перемикач:
+
+// якщо клас className відсутній, то додає його в кінець списку класів
+// і навпаки, якщо клас className присутній — видаляє його
+
+
+// Метод classList.replace(oldClassName, newClassName)
+
+// Метод очікує 2 аргументи рядка (перший — стара назва класу, другий — нова назва класу) та замінює існуючий клас oldClassName на вказаний newClassName.
+
+link.classList.replace("special", "regular");
+console.log(link.classList);  // ["link", "regular", "is-active", length: 3, value: "link regular is-active"]
+
+// Якщо спробувати поміняти клас, якого не існує на елементі, то це не викличе помилку. Просто нічого не поміняється.
+
+// Властивість style використовується для читання та зміни вбудованих стилів з DOM-елементів. Вона повертає об'єкт, який містить список лише всіх вбудованих властивостей елемента, а не увесь CSS.
+
+// Під час запису властивості вони записуються в camelCase нотації, замість дефісів, які зазвичай використовуються в CSS, тобто background-color перетворюється на backgroundColor.
+
+const button = document.querySelector(".btn");
+
+button.style.backgroundColor = "teal";
+button.style.fontSize = "24px";
+button.style.textAlign = "center";
+
+console.log(button.style); // inline styles object
+
+
+// На практиці стилізація елементів зазвичай виконується шляхом додавання CSS-класів.
+
+// Властивість style використовується для додавання будь-яких динамічних стилів, наприклад, якщо посилання на фонове зображення невідомо заздалегідь і приходить з бекенда.
+
+
+// DOM-елементам відповідають HTML-теги, які містять текстові атрибути.
+
+// Доступ до атрибутів здійснюється за допомогою стандартних методів. Ці методи працюють зі значенням, яке знаходиться в HTML.
+
+<img class="image" src="https://picsum.photos/id/15/320/240" alt="Rocks and waterfall" width="300" />
+
+
+// Метод element.hasAttribute(nameAttribute)
+
+// Метод приймає один аргумент — рядок nameAttribute, який містить ім’я атрибута для перевірки та повертає результат перевірки його наявності на елементі element — true чи false.
+
+const image = document.querySelector(".image");
+console.log(image.hasAttribute("src")); // true
+console.log(image.hasAttribute("href")); // false
+
+
+// Метод element.getAttribute(nameAttribute)
+
+// Метод отримує один аргумент — рядок nameAttribute з іменем атрибута, і повертає значення цього атрибута для вказаного HTML-елемента element. Якщо атрибут не знайдено, метод повертає null.
+
+console.log(image.getAttribute("alt")); // "Rocks and waterfall"
+
+
+// Метод element.setAttribute(nameAttribute, value)
+
+// Метод приймає два аргументи: рядок nameAttribute з іменем атрибута, який потрібно встановити або змінити, та value зі значенням, яке цьому атрибуту треба присвоїти. Метод встановлює або змінює значення зазначеного атрибута для вказаного HTML-елемента element.
+
+image.setAttribute("alt", "Amazing nature");
+console.log(image.getAttribute("alt")); // Amazing nature
+
+
+// Метод element.removeAttribute(nameAttribute)
+
+// Метод приймає один аргумент — рядок nameAttribute з іменем атрибута, який потрібно видалити зі вказаного HTML-елемента element — та видаляє його. Якщо зазначеного атрибута немає на елементі, метод не викликає жодних помилок та не робить нічого.
+
+image.removeAttribute("alt");
+console.log(image.hasAttribute("alt")); // false
+
+// Отримати доступ або змінити значення деяких атрибутів елемента можна безпосередньо, звернувшись до них як до властивостей DOM-об'єкта. Це буде менш затратно за кількістю коду.
+
+// А ось видалити або перевірити наявність буде зручніше, використовуючи відповідний метод.
+
+
+// Власні атрибути дозволяють додати до тегу довільний атрибут і отримати його значення в JavaScript.
+
+<button type="button" data-action="save">Save text</button>
+<button type="button" data-action="close">Close editore</button>
+
+// Отримання значень
+
+// Для отримання значення data-атрибута використовується властивість dataset, після якої через крапку пишеться ім'я атрибута без data-. Тобто data- відкидається, а інша частина імені записується як ім'я властивості об'єкта.
+
+const saveBtn = document.querySelector('button[data-action="save"]');
+console.log(saveBtn.dataset.action);
+const closeBtn = document.querySelector('button[data-action="close"]');
+console.log(closeBtn.dataset.action);
+
+// Змінити значення існуючого data-атрибута або додати новий можна так само, як і будь-якої іншої властивості об'єкта в JavaScript. Щоб це зробити, треба отримати доступ до DOM-елемента, а потім змінити/задати значення властивості в об'єкті dataset.
+
+saveBtn.dataset.action = 'update';
+saveBtn.dataset.role = 'admin';
+console.log(saveBtn.dataset.action);
+console.log(saveBtn.dataset.role);
