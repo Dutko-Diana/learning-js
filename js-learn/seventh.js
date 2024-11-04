@@ -239,3 +239,224 @@ saveBtn.dataset.action = 'update';
 saveBtn.dataset.role = 'admin';
 console.log(saveBtn.dataset.action);
 console.log(saveBtn.dataset.role);
+
+
+// document.createElement(tagName)
+
+// створює елемент з ім'ям tagName і повертає посилання на його об’єкт як результат свого виконання.
+// tagName — це рядок, що вказує тип елемента, який створюється.
+// Елемент створюється в пам'яті, у DOM його ще немає.
+
+const heading = document.createElement('h1');
+heading.textContent = 'Hello heading';
+heading.classList.add('title');
+console.log(heading);
+
+const imge = document.createElement('img');
+imge.src = 'https://picsum.photos/id/11/320/240';
+imge.alt = 'Nature';
+console.log(imge);
+
+
+// Щоб створений елемент відображався на сторінці, його необхідно додати до вже існуючого елемента в DOM-дереві. Припустимо, що додаємо до певного елемента elem, для цього існують такі методи.
+
+// elem.append(el1, el2, ...) — додає один або декілька елементів після всіх дітей елемента elem.
+// elem.prepend(el1, el2, ...) — додає один або декілька елементів перед усіма дітьми елемента elem.
+
+// У всіх цих методах el — це елементи або рядки, у будь-якому поєднанні та кількості. Рядки додаються, як текстові вузли.
+
+// Зверни увагу! Якщо елемент для додавання вже знаходиться в DOM, то він видаляється зі свого старого місця й додається у нове. Отже, є правило: один і той самий елемент не може бути одночасно у двох місцях.
+
+
+// Для того щоб видалити елемент, використовується метод element.remove().
+// Він викликається на елементі element, який необхідно видалити.
+
+
+// Властивість innerHTML зберігає вміст елемента, включно з тегами, у вигляді рядка. Значення, що повертається, — це завжди валідний HTML-код.
+
+// Властивість innerHTML доступна і для читання, і для запису. Якщо записати в неї рядок з HTML-тегами, то браузер під час парсингу рядка перетворить його у валідні елементи і додасть у DOM-дерево.
+
+const main = document.querySelector('.main');
+console.log(main.innerHTML);
+
+const newMain = '<a href="https://lalala">Tap here</a> <p>hi <br> there</p>'
+main.innerHTML = newMain;
+console.log(main.innerHTML);
+
+// Якщо у властивість innerHTML записати порожній рядок, то вміст елемента буде очищено. Це простий і швидкий спосіб видалення всього вмісту.
+
+const footer = document.querySelector('.footer');
+footer.innerHTML = '';
+console.log(footer.innerHTML); // empty string
+console.log(footer); // <footer class="footer"></footer>
+
+
+// Однотипна (шаблонна) розмітка створюється із масиву даних.
+
+// Прийом полягає в перебиранні цього масиву та створенні одного рядка з HTML-тегами, який потім записуємо в innerHTML елемента. Якщо ти будеш це робити за допомогою методу map(), не забудь, що він повертає масив. Отже, перед тим як додавати розмітку в DOM, цей масив треба привести до рядка за допомогою методу join()
+
+const countries = ['Ukraine', 'Italy', 'Switzerland', 'Greece', 'Spain', 'France'];
+
+const list = document.createElement('ul');
+list.style.listStyleType = 'georgian';
+const body = document.querySelector('body');
+body.append(list);
+
+const favouriteCountries = countries
+    .map((country, i) => `<li>${i + 1}: ${country}</li>`)
+    .join('');
+
+list.innerHTML = favouriteCountries;
+
+// Нове значення для element.innerHTML повністю видалить і повторно створить усіх нащадків елемента element. Якщо елемент спочатку не був порожній, то виникнуть додаткові витрати на повторне створення вже існуючої розмітки, а це погано.
+
+footer.innerHTML += '<p>Thank You!</p>';
+
+// Використовуй властивість element.innerHTML для додавання тільки у разі,
+// — коли елемент element порожній або
+// — якщо потрібно повністю замінити вміст element
+
+
+// Метод insertAdjacentHTML() — це сучасний метод для додавання рядка з HTML-тегами перед, після або всередину елемента. Він вирішує проблему innerHTML з повторною серіалізацією вмісту елемента під час додавання розмітки до вже існуючої.
+
+element.insertAdjacentHTML(position, string)
+
+// Аргумент position — це рядок, який визначає позицію щодо елемента element. Він приймає одне з чотирьох значень.
+
+"beforebegin" — перед element
+"afterbegin" — всередині element, перед усіма дітьми
+"beforeend" — всередині element, після усіх дітей
+"afterend" — після element
+
+
+// Значення "beforebegin" і "afterend" працюють тільки тоді, коли element вже знаходиться в DOM-дереві. Обмеження зумовлене тим, що неможливо дізнатися, куди вставляти розмітку, доти, доки елемент не буде перебувати в DOM-дереві.
+
+const list = document.querySelector('.list');
+const newChapters = ['chapter 4', 'chapter 5'];
+
+const markup = newChapters
+    .map(chapter => `<li class="list-item"><p>${chapter}</p></li>`)
+    .join('');
+
+list.insertAdjacentHTML('beforeend', markup);
+list.insertAdjacentHTML('beforebegin', '<h2 class="chapters">Chapters</h2>');
+
+
+// Метод addEventListener()
+
+// Подія — це сигнал від браузера про те, що на вебсторінці щось відбулося. Існує багато видів подій: події миші, події клавіатури, події елементів форм, зміни розмірів вікна, завантаження зображень, буфера обміну, зміни стадії CSS анімації або переходу тощо. Події використовуються для реакції на дії користувача й виконання коду, пов'язаного з певною подією.
+
+// Для того щоб елемент реагував на дії користувача, до нього необхідно додати слухача події та визначити йому обробника.
+
+// Слухач події — це механізм, який "слухає" або "очікує" на виникнення певної події. Метод addEventListener() додає слухача події на елемент.
+
+element.addEventListener(event, handler, options);
+
+// event — рядок, що містить ім'я події, наприклад, "click"
+// handler — колбек-функція, яка буде викликана під час настання події
+// options — необов'язковий об'єкт параметрів із розширеними налаштуваннями
+
+const body = document.querySelector('body');
+const btn = document.querySelector('.btn');
+btn.addEventListener('click', () => {
+    console.log('Hello!');
+    
+})
+
+const firstBtnClick = () => {
+    console.log("Hello 1!");
+}
+const secondBtnClick = () => {
+    const img = document.createElement('img');
+    img.src = 'https://picsum.photos/id/11/320/240';
+    img.alt = 'Nature'
+    body.prepend(img);
+}
+const thirdBtnClick = () => {
+    btn.style.display = 'none';
+}
+
+btn.addEventListener('click', firstBtnClick);
+btn.addEventListener('click', secondBtnClick);
+btn.addEventListener('click', thirdBtnClick);
+
+// На одному елементі може бути будь-яка кількість обробників подій, навіть подій одного типу. Колбек-функції будуть викликатися в порядку їхньої реєстрації в коді.
+
+
+
+// Метод removeEventListener() видаляє слухача події з елемента.
+
+// Аргументи аналогічні методу addEventListener():
+
+element.removeEventListener(event, handler, options)
+
+// Для того щоб мати можливість видаляти слухача події з елемента через removeEventListener, важливо використовувати ту саму функцію-обробник, яка була призначена в addEventListener. З цієї причини рекомендовано для обробників подій використовувати іменовані функції, які можна легко передавати як аргументи.
+
+const button = document.querySelector(".my-button");
+
+const handleClick = () => {
+  console.log("The button was pressed and now the next image will appear");
+};
+
+button.addEventListener("click", handleClick);
+
+
+// Для обробки події недостатньо знати, що подія — це клік або натискання клавіші. Розробнику можуть знадобитися інші деталі, а саме: елемент, на якому відбулася подія, його поточне значення текстового поля, вбудовані методи тощо.
+
+// Кожна подія — це об'єкт, який містить інформацію про деталі події та автоматично передається першим аргументом в обробник події. Усі події відбуваються з базового класу Event.
+
+const handleClick = event => {
+        console.log(event);
+};
+
+button.addEventListener('click', handleClick);
+
+// Параметр event — це і є об'єкт події, який автоматично передається першим аргументом під час виклику колбек-функції. Ми можемо називати його як завгодно, але, як правило, його оголошують як e, evt або event.
+
+// Деякі властивості об'єкта події:
+
+// event.type — тип події.
+// event.currentTarget — елемент, на якому виконується обробник події.
+
+const button = document.querySelector('.btn');
+
+const handleClick = event => {
+    console.log('event: ', event);
+    console.log('event type: ', event.type);
+    console.log('event current target: ', event.currentTarget);
+    
+};
+
+button.addEventListener("click", handleClick);
+
+
+// Існує дві основні події клавіатури:
+
+// keydown — подія, що відбувається при натисканні клавіші
+// keyup — подія, що відбувається, коли клавішу відпустили
+
+// На відміну від інших подій, події клавіатури обробляються на документі, а не на конкретному елементі. Об'єкти подій клавіатури походять від базового класу KeyboardEvent.
+
+document.addEventListener('keydown', event => {
+        console.log('Key is pressed:', event);
+});
+
+document.addEventListener('keyup', event => {
+        console.log('Key is not pressed:', event);
+})
+
+// Події keydown і keyup спрацьовують при натисканні будь-якої клавіші, включно зі службовими (Ctrl, ShiftAltEscape тощо).
+// На практиці переважно обробляють тільки подію keydown, оскільки вона відбувається швидше за keyup і користувач раніше бачить результат натискання.
+
+
+// Властивість об’єкта події key повертає символ, згенерований натисканням клавіші на клавіатурі. Ця властивість враховує:
+
+// стан клавіш-модифікаторів, наприклад Shift
+// поточну мову
+
+// Властивість об’єкта події code повертає код фізичної клавіші на клавіатурі й не залежить від мови та стану клавіш-модифікаторів.
+
+document.addEventListener('keydown', event => {
+        console.log('key:', event.key);
+        console.log('code: ', event.code);
+})
